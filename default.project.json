@@ -1,6 +1,6 @@
 {
   "name": "advanced-utils",
   "tree": {
-    "$path": "src/advancedUtils"
+    "$path": "src"
   }
 }

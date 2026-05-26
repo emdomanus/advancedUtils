@@ -1,1 +1,7 @@
 sourcemap.json
+dev-sourcemap.json
+*.rbxm
+*.rbxmx
+*.rbxl
+*.rbxlx
+*.tar.gz

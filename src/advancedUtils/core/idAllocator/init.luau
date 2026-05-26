@@ -31,7 +31,7 @@ function IdAllocator.new(min: number, max: number): IdAllocator
 	}, IdAllocator) :: any
 end
 
-function IdAllocator:acquire(): number?
+function IdAllocator.acquire(self: IdAllocator): number?
 	while #self._free > 0 do
 		local id = table.remove(self._free) :: number
 		if self._freeSet[id] and not self._allocated[id] then
@@ -53,7 +53,7 @@ function IdAllocator:acquire(): number?
 	return nil
 end
 
-function IdAllocator:claim(id: number): boolean
+function IdAllocator.claim(self: IdAllocator, id: number): boolean
 	assert(self:contains(id), "IdAllocator: claimed id out of range")
 	if self._allocated[id] then
 		return false
@@ -64,7 +64,7 @@ function IdAllocator:claim(id: number): boolean
 	return true
 end
 
-function IdAllocator:release(id: number)
+function IdAllocator.release(self: IdAllocator, id: number)
 	assert(self:contains(id), "IdAllocator: released id out of range")
 	if not self._allocated[id] then
 		warn(`IdAllocator: ignored release for unallocated id {id}`)
@@ -80,15 +80,15 @@ function IdAllocator:release(id: number)
 	table.insert(self._free, id)
 end
 
-function IdAllocator:contains(id: number): boolean
+function IdAllocator.contains(self: IdAllocator, id: number): boolean
 	return id >= self._min and id <= self._max
 end
 
-function IdAllocator:isAllocated(id: number): boolean
+function IdAllocator.isAllocated(self: IdAllocator, id: number): boolean
 	return self._allocated[id] == true
 end
 
-function IdAllocator:deconstruct()
+function IdAllocator.deconstruct(self: IdAllocator)
 	table.clear(self._free)
 	table.clear(self._freeSet)
 	table.clear(self._allocated)
