@@ -22,6 +22,8 @@ local function ensureStorage<T...>(
 		return callbacks, ids, indicesById
 	end
 
+	
+
 	callbacks = {}
 	ids = {}
 	indicesById = {}
@@ -30,7 +32,7 @@ local function ensureStorage<T...>(
 	self._ids = ids
 	self._indicesById = indicesById
 
-	return callbacks, ids, indicesById
+	return callbacks :: any , ids :: any, indicesById :: any --// they gaurentee butyt save cpu by no assert
 end
 
 local function swapRemove<T...>(self: Types.Hook<T...>, index: number)
@@ -101,7 +103,7 @@ function HookImpl.new<T...>(): Types.HookHandle<T...>
 		_activeCount = 0,
 		_firing = 0,
 		_dirty = false,
-	}, HookImpl) :: Types.Hook<T...>
+	}, HookImpl) :: any
 end
 
 function HookImpl.add<T...>(self: Types.Hook<T...>, callback: Callback<T...>): number
@@ -222,9 +224,7 @@ function HookImpl.deconstruct<T...>(self: Types.Hook<T...>)
 	self:clear()
 end
 
-export type Callback<T...> = Types.Callback<T...>
-export type Hook<T...> = Types.Hook<T...>
-export type HookHandle<T...> = Types.HookHandle<T...>
+
 
 return {
 	new = HookImpl.new :: <T...>() -> Types.HookHandle<T...>,
