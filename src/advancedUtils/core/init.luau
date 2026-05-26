@@ -3,7 +3,6 @@
 --!native
 
 return {
-	bootstrap = require(script.bootstrap),
 	hook = require(script.hook),
 	idAllocator = require(script.idAllocator),
 	instance = require(script.instance),

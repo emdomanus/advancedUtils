@@ -2,9 +2,9 @@
 
 Reusable Roblox utility primitives for complex game projects.
 
-This package is intended to hold generic, game-agnostic infrastructure such as data structures, math helpers, guards, tables, promises, hooks, logging, bootstrap helpers, and id allocation. Game-specific adapters should stay in the game repo.
+This package is intended to hold generic, game-agnostic infrastructure such as data structures, math helpers, guards, tables, promises, hooks, logging, and id allocation. Game-specific adapters should stay in the game repo.
 
-`advancedUtils.core.bootstrap` is now a compatibility re-export of the standalone `emdomanus/bootstrap` package.
+Lifecycle bootstrapping lives in the standalone `emdomanus/bootstrap` package.
 
 ## Package Shape
 
@@ -25,6 +25,5 @@ Current namespaces:
 
 Core utilities include:
 
-- `AdvancedUtils.core.bootstrap`
 - `AdvancedUtils.core.hook`
 - `AdvancedUtils.core.log`

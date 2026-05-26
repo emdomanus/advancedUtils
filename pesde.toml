@@ -19,6 +19,3 @@ build_files = ["src"]
 
 [indices]
 default = "https://github.com/pesde-pkg/index"
-
-[dependencies]
-bootstrap = { name = "emdomanus/bootstrap", version = "^0.1.0" }

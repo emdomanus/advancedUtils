@@ -3,7 +3,6 @@
 --!native
 
 local AddressResolver = require(script.functional.addressResolver)
-local Bootstrap = require(script.core.bootstrap)
 local CoreTable = require(script.core.table)
 local DirectionalKey = require(script.math.directionalKey)
 local Dictionary = require(script.functional.dictionary)
@@ -35,8 +34,6 @@ export type AddressConfig<PathKey> = AddressResolver.AddressConfig<PathKey>
 export type AddressResolver<PathKey> = AddressResolver.AddressResolver<PathKey>
 export type AmbiguouslyNested<K, V> = Dictionary.AmbiguouslyNested<K, V>
 export type AnyTable = CoreTable.AnyTable
-export type BootstrapAPI<SharedT, ServerT, ClientT> = Bootstrap.BootstrapAPI<SharedT, ServerT, ClientT>
-export type BootstrapPhase = Bootstrap.BootstrapPhase
 export type CompactNumberOptions = Text.CompactNumberOptions
 export type CurveType = Sample.CurveType
 export type DeltaChainEntry = CoreTable.DeltaChainEntry
