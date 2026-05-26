@@ -7,7 +7,7 @@ This package is intended to hold generic, game-agnostic infrastructure such as d
 ## Package Shape
 
 ```luau
-local AdvancedUtils = require(ReplicatedStorage.packages["advanced-utils"])
+local AdvancedUtils = require(ReplicatedStorage.packages.roblox_packages.advanced_utils)
 
 type HookHandle<T...> = AdvancedUtils.HookHandle<T...>
 type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
