@@ -1,0 +1,22 @@
+name = "emdomanus/advanced_utils"
+version = "0.1.0"
+description = "Reusable advanced utility primitives for Roblox projects."
+license = "Proprietary"
+authors = ["Edward"]
+repository = "https://github.com/emdomanus/advancedUtils"
+private = true
+
+includes = [
+	"pesde.toml",
+	"LICENSE",
+	"README.md",
+	"src/**/*.luau",
+]
+
+[target]
+environment = "roblox"
+lib = "src/init.luau"
+build_files = ["src"]
+
+[indices]
+default = "https://github.com/pesde-pkg/index"
