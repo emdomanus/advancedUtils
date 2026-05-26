@@ -5,13 +5,13 @@
 export type Callback<T...> = (T...) -> ()
 
 export type HookHandle<T...> = {
-	add: (self: HookHandle<T...>, callback: Callback<T...>) -> number,
-	remove: (self: HookHandle<T...>, id: number) -> boolean,
-	fire: (self: HookHandle<T...>, T...) -> (),
-	clear: (self: HookHandle<T...>) -> (),
-	size: (self: HookHandle<T...>) -> number,
-	has: (self: HookHandle<T...>, id: number) -> boolean,
-	deconstruct: (self: HookHandle<T...>) -> (),
+	add: (self: any, callback: Callback<T...>) -> number,
+	remove: (self: any, id: number) -> boolean,
+	fire: (self: any, T...) -> (),
+	clear: (self: any) -> (),
+	size: (self: any) -> number,
+	has: (self: any, id: number) -> boolean,
+	deconstruct: (self: any) -> (),
 }
 
 export type Hook<T...> = HookHandle<T...> & {

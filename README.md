@@ -8,6 +8,10 @@ This package is intended to hold generic, game-agnostic infrastructure such as d
 
 ```luau
 local AdvancedUtils = require(ReplicatedStorage.packages["advanced-utils"])
+
+type HookHandle<T...> = AdvancedUtils.HookHandle<T...>
+type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
+	AdvancedUtils.LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 ```
 
 Current namespaces:
