@@ -4,7 +4,7 @@
 
 export type Callback<T...> = (T...) -> ()
 
-export type HookHandle<T...> = {
+export type Hook<T...> = {
 	add: (self: any, callback: Callback<T...>) -> number,
 	remove: (self: any, id: number) -> boolean,
 	fire: (self: any, T...) -> (),
@@ -14,7 +14,9 @@ export type HookHandle<T...> = {
 	deconstruct: (self: any) -> (),
 }
 
-export type Hook<T...> = HookHandle<T...> & {
+export type HookHandle<T...> = Hook<T...>
+
+export type HookImpl<T...> = Hook<T...> & {
 	_nextId: number,
 	_count: number,
 	_activeCount: number,

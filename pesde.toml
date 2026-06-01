@@ -1,5 +1,5 @@
 name = "emdomanus/advanced_utils"
-version = "0.1.1"
+version = "0.1.2"
 description = "Reusable advanced utility primitives for Roblox projects."
 license = "MIT"
 authors = ["Edward"]

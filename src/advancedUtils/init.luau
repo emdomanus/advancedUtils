@@ -44,6 +44,7 @@ export type FlatIdDictionary<V> = Dictionary.FlatIdDictionary<V>
 export type GuardFn<T> = Guard.GuardFn<T>
 export type HeapEntry<T> = MinHeap.HeapEntry<T>
 export type HookCallback<T...> = Hook.Callback<T...>
+export type Hook<T...> = Hook.Hook<T...>
 export type HookHandle<T...> = Hook.HookHandle<T...>
 export type IdAllocator = IdAllocator.IdAllocator
 export type LayeredMap<K, V> = LayeredMap.LayeredMap<K, V>

@@ -7,12 +7,13 @@ local Types = require(script.types)
 export type Callback<T...> = Types.Callback<T...>
 export type Hook<T...> = Types.Hook<T...>
 export type HookHandle<T...> = Types.HookHandle<T...>
+export type HookImpl<T...> = Types.HookImpl<T...>
 
-local HookImpl = {}
-HookImpl.__index = HookImpl
+local HookClass = {}
+HookClass.__index = HookClass
 
 local function ensureStorage<T...>(
-	self: Types.Hook<T...>
+	self: Types.HookImpl<T...>
 ): ({ Callback<T...>? }, { number }, { [number]: number })
 	local callbacks = self._callbacks
 	local ids = self._ids
@@ -22,8 +23,6 @@ local function ensureStorage<T...>(
 		return callbacks, ids, indicesById
 	end
 
-	
-
 	callbacks = {}
 	ids = {}
 	indicesById = {}
@@ -32,10 +31,10 @@ local function ensureStorage<T...>(
 	self._ids = ids
 	self._indicesById = indicesById
 
-	return callbacks :: any , ids :: any, indicesById :: any --// they gaurentee butyt save cpu by no assert
+	return callbacks :: any, ids :: any, indicesById :: any
 end
 
-local function swapRemove<T...>(self: Types.Hook<T...>, index: number)
+local function swapRemove<T...>(self: Types.HookImpl<T...>, index: number)
 	local count = self._count
 	local callbacks = self._callbacks :: { Callback<T...>? }
 	local ids = self._ids :: { number }
@@ -59,7 +58,7 @@ local function swapRemove<T...>(self: Types.Hook<T...>, index: number)
 	self._activeCount -= 1
 end
 
-local function compact<T...>(self: Types.Hook<T...>)
+local function compact<T...>(self: Types.HookImpl<T...>)
 	local callbacks = self._callbacks
 	local ids = self._ids
 	local indicesById = self._indicesById
@@ -96,17 +95,17 @@ local function compact<T...>(self: Types.Hook<T...>)
 	self._dirty = false
 end
 
-function HookImpl.new<T...>(): Types.HookHandle<T...>
+function HookClass.new<T...>(): Types.Hook<T...>
 	return setmetatable({
 		_nextId = 1,
 		_count = 0,
 		_activeCount = 0,
 		_firing = 0,
 		_dirty = false,
-	}, HookImpl) :: any
+	}, HookClass) :: any
 end
 
-function HookImpl.add<T...>(self: Types.Hook<T...>, callback: Callback<T...>): number
+function HookClass.add<T...>(self: Types.HookImpl<T...>, callback: Callback<T...>): number
 	local callbacks, ids, indicesById = ensureStorage(self)
 	local id = self._nextId
 	self._nextId += 1
@@ -121,7 +120,7 @@ function HookImpl.add<T...>(self: Types.Hook<T...>, callback: Callback<T...>): n
 	return id
 end
 
-function HookImpl.remove<T...>(self: Types.Hook<T...>, id: number): boolean
+function HookClass.remove<T...>(self: Types.HookImpl<T...>, id: number): boolean
 	local indicesById = self._indicesById
 	if not indicesById then
 		return false
@@ -148,7 +147,7 @@ function HookImpl.remove<T...>(self: Types.Hook<T...>, id: number): boolean
 	return true
 end
 
-function HookImpl.fire<T...>(self: Types.Hook<T...>, ...: T...)
+function HookClass.fire<T...>(self: Types.HookImpl<T...>, ...: T...)
 	if self._activeCount == 0 then
 		return
 	end
@@ -172,7 +171,7 @@ function HookImpl.fire<T...>(self: Types.Hook<T...>, ...: T...)
 	end
 end
 
-function HookImpl.clear<T...>(self: Types.Hook<T...>)
+function HookClass.clear<T...>(self: Types.HookImpl<T...>)
 	local callbacks = self._callbacks
 	local ids = self._ids
 	local indicesById = self._indicesById
@@ -206,7 +205,7 @@ function HookImpl.clear<T...>(self: Types.Hook<T...>)
 	self._dirty = false
 end
 
-function HookImpl.size<T...>(self: Types.Hook<T...>): number
+function HookClass.size<T...>(self: Types.HookImpl<T...>): number
 	if self._dirty and self._firing == 0 then
 		compact(self)
 	end
@@ -214,18 +213,16 @@ function HookImpl.size<T...>(self: Types.Hook<T...>): number
 	return self._activeCount
 end
 
-function HookImpl.has<T...>(self: Types.Hook<T...>, id: number): boolean
+function HookClass.has<T...>(self: Types.HookImpl<T...>, id: number): boolean
 	local indicesById = self._indicesById
 
 	return indicesById ~= nil and indicesById[id] ~= nil
 end
 
-function HookImpl.deconstruct<T...>(self: Types.Hook<T...>)
+function HookClass.deconstruct<T...>(self: Types.HookImpl<T...>)
 	self:clear()
 end
 
-
-
 return {
-	new = HookImpl.new :: <T...>() -> Types.HookHandle<T...>,
+	new = HookClass.new :: <T...>() -> Types.Hook<T...>,
 }

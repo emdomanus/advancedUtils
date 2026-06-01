@@ -13,6 +13,16 @@ local DEFAULT_DECIMALS = 3
 local DEFAULT_CAPS = true
 
 local SUFFIXES = { "", "K", "M", "B", "T", "Q", "Qi", "Sx", "Sp", "Oc", "No", "Dc" }
+local ROMAN_NUMERAL_CACHE: { [number]: string } = {}
+local ROMAN_NUMERALS = {
+	{ value = 50, label = "L" },
+	{ value = 40, label = "XL" },
+	{ value = 10, label = "X" },
+	{ value = 9, label = "IX" },
+	{ value = 5, label = "V" },
+	{ value = 4, label = "IV" },
+	{ value = 1, label = "I" },
+}
 
 local function isLetter(character: string): boolean
 	return string.match(character, "%a") ~= nil
@@ -118,6 +128,49 @@ function TextUtils.formatCompactNumber(value: number, decimals: number?, caps: b
 	end
 
 	return sign .. numberText .. suffix
+end
+
+function TextUtils.formatDisplayNumber(value: number, decimals: number?, integerThreshold: number?): string
+	if value % 1 == 0 then
+		return tostring(value)
+	end
+
+	if math.abs(value) >= (integerThreshold or 100) then
+		return tostring(math.round(value))
+	end
+
+	local places = math.max(0, math.floor(decimals or 1))
+	return trimTrailingZeros(string.format("%." .. places .. "f", value))
+end
+
+function TextUtils.formatDamageNumber(value: number): string
+	return tostring(math.max(1, math.round(value)))
+end
+
+function TextUtils.formatRomanNumeral(value: number): string
+	local rounded = math.max(math.floor(value), 0)
+	if rounded <= 0 then
+		return ""
+	end
+
+	local cached = ROMAN_NUMERAL_CACHE[rounded]
+	if cached ~= nil then
+		return cached
+	end
+
+	local remaining = rounded
+	local parts = {}
+
+	for _, numeral in ROMAN_NUMERALS do
+		while remaining >= numeral.value do
+			table.insert(parts, numeral.label)
+			remaining -= numeral.value
+		end
+	end
+
+	local result = table.concat(parts)
+	ROMAN_NUMERAL_CACHE[rounded] = result
+	return result
 end
 
 return TextUtils

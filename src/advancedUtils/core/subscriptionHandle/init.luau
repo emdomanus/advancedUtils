@@ -1,23 +1,25 @@
 --!strict
 
 export type SubscriptionHandle = {
-	subscriptions: { () -> () },
-
 	addSubscription: (self: SubscriptionHandle, callback: () -> ()) -> () -> (),
 	clearSubscriptions: (self: SubscriptionHandle) -> (),
 	deconstruct: (self: SubscriptionHandle) -> (),
+}
+
+export type SubscriptionHandleImpl = SubscriptionHandle & {
+	subscriptions: { () -> () },
 }
 
 local SubscriptionHandle = {}
 SubscriptionHandle.__index = SubscriptionHandle
 
 function SubscriptionHandle.new(existingTable: {}?): SubscriptionHandle
-	local self: SubscriptionHandle = setmetatable(existingTable or {}, SubscriptionHandle) :: any
+	local self: SubscriptionHandleImpl = setmetatable(existingTable or {}, SubscriptionHandle) :: any
 	self.subscriptions = {}
 	return self
 end
 
-function SubscriptionHandle.addSubscription(self: SubscriptionHandle, cb: () -> ()): () -> ()
+function SubscriptionHandle.addSubscription(self: SubscriptionHandleImpl, cb: () -> ()): () -> ()
 	table.insert(self.subscriptions, cb)
 
 	return function()
@@ -28,14 +30,14 @@ function SubscriptionHandle.addSubscription(self: SubscriptionHandle, cb: () -> 
 	end
 end
 
-function SubscriptionHandle.clearSubscriptions(self: SubscriptionHandle): ()
+function SubscriptionHandle.clearSubscriptions(self: SubscriptionHandleImpl): ()
 	for _, unSub in self.subscriptions do
 		unSub()
 	end
 	table.clear(self.subscriptions)
 end
 
-function SubscriptionHandle.deconstruct(self: SubscriptionHandle): ()
+function SubscriptionHandle.deconstruct(self: SubscriptionHandleImpl): ()
 	self:clearSubscriptions()
 	self.subscriptions = {}
 end

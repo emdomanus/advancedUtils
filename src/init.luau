@@ -20,6 +20,7 @@ export type FlatIdDictionary<V> = AdvancedUtils.FlatIdDictionary<V>
 export type GuardFn<T> = AdvancedUtils.GuardFn<T>
 export type HeapEntry<T> = AdvancedUtils.HeapEntry<T>
 export type HookCallback<T...> = AdvancedUtils.HookCallback<T...>
+export type Hook<T...> = AdvancedUtils.Hook<T...>
 export type HookHandle<T...> = AdvancedUtils.HookHandle<T...>
 export type IdAllocator = AdvancedUtils.IdAllocator
 export type LayeredMap<K, V> = AdvancedUtils.LayeredMap<K, V>

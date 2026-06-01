@@ -14,6 +14,8 @@ export type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, Modifier
 	Types.LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 export type LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
 	Types.LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
+export type LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
+	Types.LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 
 local LayeredValueResolver = {}
 LayeredValueResolver.__index = LayeredValueResolver
@@ -55,7 +57,7 @@ end
 function LayeredValueResolver.new<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
 	config: Config<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 ): LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
-	local self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
+	local self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
 		setmetatable({}, LayeredValueResolver) :: any
 
 	self._config = config
@@ -85,13 +87,13 @@ function LayeredValueResolver.new<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
 end
 
 function LayeredValueResolver._getFinalLayer<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 ): LayerT
 	return self._config.layers[#self._config.layers]
 end
 
 function LayeredValueResolver._recomputeAggregates<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	layer: LayerT,
 	modifiedKeys: { [KeyT]: boolean? }
 ): ()
@@ -128,7 +130,7 @@ function LayeredValueResolver._recomputeAggregates<ValueT, KeyT, LayerT, Categor
 end
 
 function LayeredValueResolver._recomputeLayer<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	layer: LayerT,
 	modifiedKeys: { [KeyT]: boolean? }
 ): ()
@@ -174,7 +176,7 @@ function LayeredValueResolver._recomputeLayer<ValueT, KeyT, LayerT, CategoryT, M
 end
 
 function LayeredValueResolver._notifyFinalChanges<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	modifiedKeys: { [KeyT]: boolean? }
 ): ()
 	self._validSnapshot = nil
@@ -193,7 +195,7 @@ function LayeredValueResolver._notifyFinalChanges<ValueT, KeyT, LayerT, Category
 end
 
 function LayeredValueResolver.addModifier<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	modifier: ModifierT,
 	layer: LayerT
 ): ()
@@ -217,7 +219,7 @@ function LayeredValueResolver.addModifier<ValueT, KeyT, LayerT, CategoryT, Modif
 end
 
 function LayeredValueResolver.updateModifier<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	modifier: ModifierT,
 	modifiedKeys: { [KeyT]: boolean? }
 ): ()
@@ -231,7 +233,7 @@ function LayeredValueResolver.updateModifier<ValueT, KeyT, LayerT, CategoryT, Mo
 end
 
 function LayeredValueResolver.removeModifier<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	modifier: ModifierT
 ): ()
 	local layer = self._modifiersToLayer[modifier]
@@ -262,21 +264,21 @@ function LayeredValueResolver.removeModifier<ValueT, KeyT, LayerT, CategoryT, Mo
 end
 
 function LayeredValueResolver.getModifierLayer<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	modifier: ModifierT
 ): LayerT?
 	return self._modifiersToLayer[modifier]
 end
 
 function LayeredValueResolver.getValue<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	key: KeyT
 ): ValueT
 	return self._statsByLayer[self:_getFinalLayer()][key]
 end
 
 function LayeredValueResolver.getSnapshot<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 ): { [KeyT]: ValueT }
 	if self._validSnapshot ~= nil then
 		return self._validSnapshot
@@ -288,7 +290,7 @@ function LayeredValueResolver.getSnapshot<ValueT, KeyT, LayerT, CategoryT, Modif
 end
 
 function LayeredValueResolver.bindToValueChange<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	key: KeyT,
 	callback: (newValue: ValueT) -> (),
 	runInitially: boolean?
@@ -311,7 +313,7 @@ function LayeredValueResolver.bindToValueChange<ValueT, KeyT, LayerT, CategoryT,
 end
 
 function LayeredValueResolver.unbindFromValueChange<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>,
 	key: KeyT,
 	callback: (newValue: ValueT) -> ()
 ): ()
@@ -324,7 +326,7 @@ function LayeredValueResolver.unbindFromValueChange<ValueT, KeyT, LayerT, Catego
 end
 
 function LayeredValueResolver.deconstruct<ValueT, KeyT, LayerT, CategoryT, ModifierT>(
-	self: LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
+	self: LayeredValueResolverImpl<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 ): ()
 	table.clear(self._modifiersToLayer)
 	table.clear(self._onChangeCallbacks)
