@@ -9,8 +9,6 @@ local Dictionary = require(script.functional.dictionary)
 local Guard = require(script.functional.guard)
 local Hook = require(script.core.hook)
 local IdAllocator = require(script.core.idAllocator)
-local LayeredMap = require(script.dataStructures.layeredMap)
-local LayeredValueResolver = require(script.dataStructures.layeredValueResolver)
 local Log = require(script.core.log)
 local MinHeap = require(script.dataStructures.minHeap)
 local PowerCurve = require(script.math.powerCurve)
@@ -38,28 +36,13 @@ export type CompactNumberOptions = Text.CompactNumberOptions
 export type CurveType = Sample.CurveType
 export type DeltaChainEntry = CoreTable.DeltaChainEntry
 export type EightDirectionalKey = DirectionalKey.EightDirectionalKey
-export type EnsuredLayeredMap<K, V> = LayeredMap.EnsuredLayeredMap<K, V>
 export type Executor<T> = Promise.Executor<T>
 export type FlatIdDictionary<V> = Dictionary.FlatIdDictionary<V>
 export type GuardFn<T> = Guard.GuardFn<T>
 export type HeapEntry<T> = MinHeap.HeapEntry<T>
 export type HookCallback<T...> = Hook.Callback<T...>
 export type Hook<T...> = Hook.Hook<T...>
-export type HookHandle<T...> = Hook.HookHandle<T...>
 export type IdAllocator = IdAllocator.IdAllocator
-export type LayeredMap<K, V> = LayeredMap.LayeredMap<K, V>
-export type LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	LayeredValueResolver.LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
-export type LayeredValueResolverCategoryAggregator<ModifierValueT, KeyT, AggregateT, ModifierT> =
-	LayeredValueResolver.CategoryAggregator<ModifierValueT, KeyT, AggregateT, ModifierT>
-export type LayeredValueResolverCategoryDefinition<ValueT, KeyT, ModifierT> =
-	LayeredValueResolver.CategoryDefinition<ValueT, KeyT, ModifierT>
-export type LayeredValueResolverCategorySolver<ValueT, KeyT, AggregateT> =
-	LayeredValueResolver.CategorySolver<ValueT, KeyT, AggregateT>
-export type LayeredValueResolverConfig<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	LayeredValueResolver.Config<ValueT, KeyT, LayerT, CategoryT, ModifierT>
-export type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	LayeredValueResolver.LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 export type LoadFlatIdDictionaryOptions<V> = Dictionary.LoadFlatIdDictionaryOptions<V>
 export type LogLevel = Log.LogLevel
 export type LogRecord = Log.LogRecord

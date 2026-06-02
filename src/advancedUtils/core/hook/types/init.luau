@@ -14,8 +14,6 @@ export type Hook<T...> = {
 	deconstruct: (self: any) -> (),
 }
 
-export type HookHandle<T...> = Hook<T...>
-
 export type HookImpl<T...> = Hook<T...> & {
 	_nextId: number,
 	_count: number,

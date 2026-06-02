@@ -14,28 +14,13 @@ export type CompactNumberOptions = AdvancedUtils.CompactNumberOptions
 export type CurveType = AdvancedUtils.CurveType
 export type DeltaChainEntry = AdvancedUtils.DeltaChainEntry
 export type EightDirectionalKey = AdvancedUtils.EightDirectionalKey
-export type EnsuredLayeredMap<K, V> = AdvancedUtils.EnsuredLayeredMap<K, V>
 export type Executor<T> = AdvancedUtils.Executor<T>
 export type FlatIdDictionary<V> = AdvancedUtils.FlatIdDictionary<V>
 export type GuardFn<T> = AdvancedUtils.GuardFn<T>
 export type HeapEntry<T> = AdvancedUtils.HeapEntry<T>
 export type HookCallback<T...> = AdvancedUtils.HookCallback<T...>
 export type Hook<T...> = AdvancedUtils.Hook<T...>
-export type HookHandle<T...> = AdvancedUtils.HookHandle<T...>
 export type IdAllocator = AdvancedUtils.IdAllocator
-export type LayeredMap<K, V> = AdvancedUtils.LayeredMap<K, V>
-export type LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	AdvancedUtils.LayeredValueResolver<ValueT, KeyT, LayerT, CategoryT, ModifierT>
-export type LayeredValueResolverCategoryAggregator<ModifierValueT, KeyT, AggregateT, ModifierT> =
-	AdvancedUtils.LayeredValueResolverCategoryAggregator<ModifierValueT, KeyT, AggregateT, ModifierT>
-export type LayeredValueResolverCategoryDefinition<ValueT, KeyT, ModifierT> =
-	AdvancedUtils.LayeredValueResolverCategoryDefinition<ValueT, KeyT, ModifierT>
-export type LayeredValueResolverCategorySolver<ValueT, KeyT, AggregateT> =
-	AdvancedUtils.LayeredValueResolverCategorySolver<ValueT, KeyT, AggregateT>
-export type LayeredValueResolverConfig<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	AdvancedUtils.LayeredValueResolverConfig<ValueT, KeyT, LayerT, CategoryT, ModifierT>
-export type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	AdvancedUtils.LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT>
 export type LoadFlatIdDictionaryOptions<V> = AdvancedUtils.LoadFlatIdDictionaryOptions<V>
 export type LogLevel = AdvancedUtils.LogLevel
 export type LogRecord = AdvancedUtils.LogRecord

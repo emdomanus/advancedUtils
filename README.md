@@ -11,9 +11,7 @@ Lifecycle bootstrapping lives in the standalone `emdomanus/bootstrap` package.
 ```luau
 local AdvancedUtils = require(ReplicatedStorage.packages.roblox_packages.advanced_utils)
 
-type HookHandle<T...> = AdvancedUtils.HookHandle<T...>
-type LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT> =
-	AdvancedUtils.LayeredValueResolverHandle<ValueT, KeyT, LayerT, CategoryT, ModifierT>
+type Hook<T...> = AdvancedUtils.Hook<T...>
 ```
 
 Current namespaces:

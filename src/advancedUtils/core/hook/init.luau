@@ -6,7 +6,6 @@ local Types = require(script.types)
 
 export type Callback<T...> = Types.Callback<T...>
 export type Hook<T...> = Types.Hook<T...>
-export type HookHandle<T...> = Types.HookHandle<T...>
 export type HookImpl<T...> = Types.HookImpl<T...>
 
 local HookClass = {}
