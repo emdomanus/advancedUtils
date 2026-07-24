@@ -3,7 +3,6 @@
 --!native
 
 return {
-	hook = require(script.hook),
 	idAllocator = require(script.idAllocator),
 	instance = require(script.instance),
 	log = require(script.log),

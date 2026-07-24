@@ -2,7 +2,7 @@
 
 Reusable Roblox utility primitives for complex game projects.
 
-This package is intended to hold generic, game-agnostic infrastructure such as data structures, math helpers, guards, tables, promises, hooks, logging, and id allocation. Game-specific adapters should stay in the game repo.
+This package is intended to hold generic, game-agnostic infrastructure such as data structures, math helpers, guards, tables, promises, logging, and id allocation. Game-specific adapters should stay in the game repo.
 
 Lifecycle bootstrapping lives in the standalone `emdomanus/bootstrap` package.
 
@@ -10,8 +10,6 @@ Lifecycle bootstrapping lives in the standalone `emdomanus/bootstrap` package.
 
 ```luau
 local AdvancedUtils = require(ReplicatedStorage.packages.roblox_packages.advanced_utils)
-
-type Hook<T...> = AdvancedUtils.Hook<T...>
 ```
 
 Current namespaces:
@@ -23,5 +21,4 @@ Current namespaces:
 
 Core utilities include:
 
-- `AdvancedUtils.core.hook`
 - `AdvancedUtils.core.log`
