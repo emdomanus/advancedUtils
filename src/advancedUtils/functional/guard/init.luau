@@ -109,6 +109,26 @@ function Guard.oneOf<T>(...: GuardFn<T>): GuardFn<T>
 	end
 end
 
+function Guard.byTag<T>(tagKey: string, arms: { [string]: GuardFn<T> }): GuardFn<T>
+	return function(v: unknown): T
+		assert(type(v) == "table", "Expected table for byTag guard")
+
+		local t = v :: any
+		local tag = t[tagKey]
+		local arm = arms[tag]
+		if arm == nil then
+			local validTags = {} :: { string }
+			for validTag in arms do
+				table.insert(validTags, validTag)
+			end
+			table.sort(validTags)
+			error(`Unknown {tagKey} "{tostring(tag)}" (expected: {table.concat(validTags, ", ")})`)
+		end
+
+		return arm(v)
+	end
+end
+
 function Guard.all<T>(...: GuardFn<T | any>): GuardFn<T>
 	local guards = { ... }
 	return function(v: unknown): T
@@ -174,6 +194,24 @@ function Guard.property<T, P>(key: P, valueGuard: GuardFn<T>): GuardFn<{ [P]: T 
 
 		-- Run the guard and set the validated/coerced value
 		t[key] = valueGuard(raw)
+
+		return t
+	end
+end
+
+-- =========================================================
+-- Forbid: reject named properties on a table
+-- =========================================================
+
+function Guard.forbid(...: string): GuardFn<{ [any]: any }>
+	local forbiddenKeys = { ... }
+	return function(v: unknown): { [any]: any }
+		assert(type(v) == "table", "Expected table for forbid guard")
+
+		local t = v :: { [any]: any }
+		for _, key in forbiddenKeys do
+			assert(t[key] == nil, `Forbidden field "{key}"`)
+		end
 
 		return t
 	end
